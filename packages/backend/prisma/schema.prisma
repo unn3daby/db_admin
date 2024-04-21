@@ -1,0 +1,229 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Stock {
+  id           Int      @id @default(autoincrement())
+  companyId    Int
+  globalId     Int      @unique
+  price        Float
+  date         DateTime
+  fullName     String
+  isinCode     Int
+  shortName    String
+  openingPrice Float
+  appeal       Int
+  closePrice   Float
+
+  Company            Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  Dividends          Dividends[]
+  StockToFundAccount StockToFundAccount[]
+
+  @@index([companyId])
+}
+
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  revenue   Float
+  marketCap Float
+  createdAt DateTime @default(now())
+  netIncome Float
+
+  Stock Stock[]
+}
+
+model Fund {
+  id             Int      @id @default(autoincrement())
+  name           String
+  createdAt      DateTime @default(now())
+  fullname       String
+  capitalization String
+  shortname      String
+
+  FundStock   FundStock[]
+  FundAccount FundAccount[]
+}
+
+model FundStock {
+  id           Int      @id @default(autoincrement())
+  fundId       Int
+  date         DateTime
+  isin         Int
+  openingPrice Float
+  appeal       Int
+  commission   Float
+  closePrice   Float
+
+  Fund                                Fund                                  @relation(fields: [fundId], references: [id], onDelete: Cascade)
+  FundStockToBrokerBrokerageAccount   FundStockToBrokerBrokerageAccount[]
+  FundStockToPhysicalBrokerageAccount FundStockToPhysicalBrokerageAccount[]
+}
+
+model FundAccount {
+  id          Int      @id @default(autoincrement())
+  fundId      Int
+  fundStockId Int
+  createdAt   DateTime @default(now())
+  capital     Float
+
+  Fund                     Fund                       @relation(fields: [fundId], references: [id], onDelete: Cascade)
+  StockToFundAccount       StockToFundAccount[]
+  ObligationToFoundAccount ObligationToFoundAccount[]
+}
+
+model Dividends {
+  id      Int      @id @default(autoincrement())
+  stockId Int
+  date    DateTime
+  payment Float
+
+  Stock Stock @relation(fields: [stockId], references: [id], onDelete: Cascade)
+}
+
+model Broker {
+  id             Int      @id @default(autoincrement())
+  name           String
+  paymentAccount Int
+  createdAt      DateTime @default(now())
+
+  BrokerBrokerageAccount   BrokerBrokerageAccount[]
+  PhysicalBrokerageAccount PhysicalBrokerageAccount[]
+}
+
+model BrokerBrokerageAccount {
+  id        Int      @id @default(autoincrement())
+  brokerId  Int
+  capital   Float
+  createdAt DateTime @default(now())
+
+  Broker                             Broker                               @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  FundStockToBrokerBrokerageAccount  FundStockToBrokerBrokerageAccount[]
+  ObligationToBrokerBrokerageAccount ObligationToBrokerBrokerageAccount[]
+}
+
+model PhysicalBrokerageAccount {
+  id               Int      @id @default(autoincrement())
+  brokerId         Int
+  physicalPersonId Int
+  capital          Float
+  createdAt        DateTime @default(now())
+
+  Broker                               Broker                                 @relation(fields: [brokerId], references: [id])
+  PhysicalPerson                       PhysicalPerson                         @relation(fields: [physicalPersonId], references: [id])
+  FundStockToPhysicalBrokerageAccount  FundStockToPhysicalBrokerageAccount[]
+  ObligationToPhysicalBrokerageAccount ObligationToPhysicalBrokerageAccount[]
+}
+
+model PhysicalPerson {
+  id         Int     @id @default(autoincrement())
+  name       String
+  surname    String
+  patronymic String?
+  inn        Int
+
+  PhysicalBrokerageAccount PhysicalBrokerageAccount[]
+}
+
+model Obligation {
+  id           Int      @id @default(autoincrement())
+  payerId      Int
+  price        String
+  date         DateTime
+  openingPrice Float
+  closePrice   Float
+
+  Payments                             Payment[]
+  Payer                                Payer                                  @relation(fields: [payerId], references: [id])
+  ObligationToFoundAccount             ObligationToFoundAccount[]
+  ObligationToBrokerBrokerageAccount   ObligationToBrokerBrokerageAccount[]
+  ObligationToPhysicalBrokerageAccount ObligationToPhysicalBrokerageAccount[]
+}
+
+model Payer {
+  id     Int    @id @default(autoincrement())
+  name   String
+  status String
+
+  Obligation Obligation[]
+}
+
+model Payment {
+  id           Int      @id @default(autoincrement())
+  date         DateTime
+  status       String
+  obligationId Int
+
+  Obligation Obligation @relation(fields: [obligationId], references: [id])
+}
+
+model StockToFundAccount {
+  stock         Stock       @relation(fields: [stockId], references: [id])
+  stockId       Int
+  fundAccount   FundAccount @relation(fields: [fundAccountId], references: [id])
+  fundAccountId Int
+  price         Float
+  quantity      Int
+
+  @@id([stockId, fundAccountId])
+}
+
+model FundStockToBrokerBrokerageAccount {
+  fundStock                FundStock              @relation(fields: [fundStockId], references: [id])
+  fundStockId              Int
+  brokerBrokerageAccount   BrokerBrokerageAccount @relation(fields: [brokerBrokerageAccountId], references: [id])
+  brokerBrokerageAccountId Int
+  price                    Float
+  quantity                 Int
+
+  @@id([fundStockId, brokerBrokerageAccountId])
+}
+
+model FundStockToPhysicalBrokerageAccount {
+  fundStock                  FundStock                @relation(fields: [fundStockId], references: [id])
+  fundStockId                Int
+  physicalBrokerageAccount   PhysicalBrokerageAccount @relation(fields: [physicalBrokerageAccountId], references: [id])
+  physicalBrokerageAccountId Int
+  price                      Float
+  quantity                   Int
+
+  @@id([fundStockId, physicalBrokerageAccountId])
+}
+
+model ObligationToFoundAccount {
+  obligation    Obligation  @relation(fields: [obligationId], references: [id])
+  obligationId  Int
+  fundAccount   FundAccount @relation(fields: [fundAccountId], references: [id])
+  fundAccountId Int
+  price         Float
+  quantity      Int
+
+  @@id([obligationId, fundAccountId])
+}
+
+model ObligationToBrokerBrokerageAccount {
+  obligation               Obligation             @relation(fields: [obligationId], references: [id])
+  obligationId             Int
+  brokerBrokerageAccount   BrokerBrokerageAccount @relation(fields: [brokerBrokerageAccountId], references: [id])
+  brokerBrokerageAccountId Int
+  price                    Float
+  quantity                 Int
+
+  @@id([obligationId, brokerBrokerageAccountId])
+}
+
+model ObligationToPhysicalBrokerageAccount {
+  obligation                 Obligation               @relation(fields: [obligationId], references: [id])
+  obligationId               Int
+  physicalBrokerageAccount   PhysicalBrokerageAccount @relation(fields: [physicalBrokerageAccountId], references: [id])
+  physicalBrokerageAccountId Int
+  price                      Float
+  quantity                   Int
+
+  @@id([obligationId, physicalBrokerageAccountId])
+}

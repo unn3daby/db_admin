@@ -1,0 +1,7 @@
+{
+    "name": "db_admin",
+    "private": true,
+    "workspaces": [
+        "./packages/*"
+    ]
+}
