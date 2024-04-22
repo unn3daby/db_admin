@@ -1,23 +1,26 @@
 import { Request, Response } from "express";
 import {
-    createPhysicalPerson,
-    showPhysicalPerson,
-    updatePhysicalPerson,
-    deletePhysicalPerson,
-} from "../services/physicalPerson-service";
+    createObligation,
+    showObligation,
+    updateObligation,
+    deleteObligation,
+} from "../services/obligation-service";
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const { name, surname, inn, patronymic } = req.body;
-        const physicalPerson = await createPhysicalPerson({
-            name,
-            surname,
-            inn,
-            patronymic,
+        const { price, date, openingPrice, closePrice, payerId } = req.body;
+        const obligation = await createObligation({
+            price,
+            date,
+            openingPrice,
+            closePrice,
+            Payer: {
+                connect: { id: payerId },
+            },
         });
         return res.status(201).json({
-            message: "Элемент добавлен в базу",
-            data: physicalPerson,
+            message: "Облигация успешно создана",
+            data: obligation,
         });
     } catch (error) {
         console.log(error);
@@ -30,10 +33,10 @@ export const create = async (req: Request, res: Response) => {
 
 export const show = async (_: Request, res: Response) => {
     try {
-        const physicalPersons = await showPhysicalPerson();
+        const obligations = await showObligation();
         return res.status(200).json({
-            message: "Список успешно сформирован",
-            data: physicalPersons,
+            message: "Список облигаций успешно сформирован",
+            data: obligations,
         });
     } catch (error) {
         console.log(error);
@@ -47,19 +50,22 @@ export const show = async (_: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const { name, surname, inn, patronymic } = req.body;
-        const physicalPerson = await updatePhysicalPerson(
+        const { price, date, openingPrice, closePrice, payerId } = req.body;
+        const obligation = await updateObligation(
             {
-                name,
-                surname,
-                inn,
-                patronymic,
+                price,
+                date,
+                openingPrice,
+                closePrice,
+                Payer: {
+                    connect: { id: payerId },
+                },
             },
             id
         );
         return res.status(200).json({
-            message: "Элемент обновлен",
-            data: physicalPerson,
+            message: "Облигация обновлена",
+            data: obligation,
         });
     } catch (error) {
         console.log(error);
@@ -73,10 +79,10 @@ export const update = async (req: Request, res: Response) => {
 export const remove = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const company = await deletePhysicalPerson(id);
+        const obligation = await deleteObligation(id);
         return res.status(200).json({
-            message: "Элемент удален из базы",
-            data: company,
+            message: "Облигация удалена из базы",
+            data: obligation,
         });
     } catch (error) {
         console.log(error);

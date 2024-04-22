@@ -1,23 +1,21 @@
 import { Request, Response } from "express";
 import {
-    createPhysicalPerson,
-    showPhysicalPerson,
-    updatePhysicalPerson,
-    deletePhysicalPerson,
-} from "../services/physicalPerson-service";
+    createPayer,
+    showPayer,
+    updatePayer,
+    deletePayer,
+} from "../services/payer-service";
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const { name, surname, inn, patronymic } = req.body;
-        const physicalPerson = await createPhysicalPerson({
+        const { name, status } = req.body;
+        const payer = await createPayer({
             name,
-            surname,
-            inn,
-            patronymic,
+            status,
         });
         return res.status(201).json({
             message: "Элемент добавлен в базу",
-            data: physicalPerson,
+            data: payer,
         });
     } catch (error) {
         console.log(error);
@@ -30,10 +28,10 @@ export const create = async (req: Request, res: Response) => {
 
 export const show = async (_: Request, res: Response) => {
     try {
-        const physicalPersons = await showPhysicalPerson();
+        const payers = await showPayer();
         return res.status(200).json({
             message: "Список успешно сформирован",
-            data: physicalPersons,
+            data: payers,
         });
     } catch (error) {
         console.log(error);
@@ -47,19 +45,17 @@ export const show = async (_: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const { name, surname, inn, patronymic } = req.body;
-        const physicalPerson = await updatePhysicalPerson(
+        const { name, status } = req.body;
+        const payer = await updatePayer(
             {
                 name,
-                surname,
-                inn,
-                patronymic,
+                status,
             },
             id
         );
         return res.status(200).json({
             message: "Элемент обновлен",
-            data: physicalPerson,
+            data: payer,
         });
     } catch (error) {
         console.log(error);
@@ -73,10 +69,10 @@ export const update = async (req: Request, res: Response) => {
 export const remove = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const company = await deletePhysicalPerson(id);
+        const payer = await deletePayer(id);
         return res.status(200).json({
             message: "Элемент удален из базы",
-            data: company,
+            data: payer,
         });
     } catch (error) {
         console.log(error);

@@ -115,16 +115,16 @@ model PhysicalBrokerageAccount {
   createdAt        DateTime @default(now())
 
   Broker                               Broker                                 @relation(fields: [brokerId], references: [id])
-  PhysicalPerson                       PhysicalPerson                         @relation(fields: [physicalPersonId], references: [id])
+  PhysicalPerson                       PhysicalPerson                         @relation(fields: [physicalPersonId], references: [id], onDelete: Cascade)
   FundStockToPhysicalBrokerageAccount  FundStockToPhysicalBrokerageAccount[]
   ObligationToPhysicalBrokerageAccount ObligationToPhysicalBrokerageAccount[]
 }
 
 model PhysicalPerson {
-  id         Int     @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   name       String
   surname    String
-  patronymic String?
+  patronymic String
   inn        Int
 
   PhysicalBrokerageAccount PhysicalBrokerageAccount[]
@@ -139,7 +139,7 @@ model Obligation {
   closePrice   Float
 
   Payments                             Payment[]
-  Payer                                Payer                                  @relation(fields: [payerId], references: [id])
+  Payer                                Payer                                  @relation(fields: [payerId], references: [id], onDelete: Cascade)
   ObligationToFoundAccount             ObligationToFoundAccount[]
   ObligationToBrokerBrokerageAccount   ObligationToBrokerBrokerageAccount[]
   ObligationToPhysicalBrokerageAccount ObligationToPhysicalBrokerageAccount[]
@@ -159,13 +159,13 @@ model Payment {
   status       String
   obligationId Int
 
-  Obligation Obligation @relation(fields: [obligationId], references: [id])
+  Obligation Obligation @relation(fields: [obligationId], references: [id], onDelete: Cascade)
 }
 
 model StockToFundAccount {
-  stock         Stock       @relation(fields: [stockId], references: [id])
+  stock         Stock       @relation(fields: [stockId], references: [id], onDelete: Cascade)
   stockId       Int
-  fundAccount   FundAccount @relation(fields: [fundAccountId], references: [id])
+  fundAccount   FundAccount @relation(fields: [fundAccountId], references: [id], onDelete: Cascade)
   fundAccountId Int
   price         Float
   quantity      Int
@@ -174,9 +174,9 @@ model StockToFundAccount {
 }
 
 model FundStockToBrokerBrokerageAccount {
-  fundStock                FundStock              @relation(fields: [fundStockId], references: [id])
+  fundStock                FundStock              @relation(fields: [fundStockId], references: [id], onDelete: Cascade)
   fundStockId              Int
-  brokerBrokerageAccount   BrokerBrokerageAccount @relation(fields: [brokerBrokerageAccountId], references: [id])
+  brokerBrokerageAccount   BrokerBrokerageAccount @relation(fields: [brokerBrokerageAccountId], references: [id], onDelete: Cascade)
   brokerBrokerageAccountId Int
   price                    Float
   quantity                 Int
@@ -185,9 +185,9 @@ model FundStockToBrokerBrokerageAccount {
 }
 
 model FundStockToPhysicalBrokerageAccount {
-  fundStock                  FundStock                @relation(fields: [fundStockId], references: [id])
+  fundStock                  FundStock                @relation(fields: [fundStockId], references: [id], onDelete: Cascade)
   fundStockId                Int
-  physicalBrokerageAccount   PhysicalBrokerageAccount @relation(fields: [physicalBrokerageAccountId], references: [id])
+  physicalBrokerageAccount   PhysicalBrokerageAccount @relation(fields: [physicalBrokerageAccountId], references: [id], onDelete: Cascade)
   physicalBrokerageAccountId Int
   price                      Float
   quantity                   Int
@@ -196,9 +196,9 @@ model FundStockToPhysicalBrokerageAccount {
 }
 
 model ObligationToFoundAccount {
-  obligation    Obligation  @relation(fields: [obligationId], references: [id])
+  obligation    Obligation  @relation(fields: [obligationId], references: [id], onDelete: Cascade)
   obligationId  Int
-  fundAccount   FundAccount @relation(fields: [fundAccountId], references: [id])
+  fundAccount   FundAccount @relation(fields: [fundAccountId], references: [id], onDelete: Cascade)
   fundAccountId Int
   price         Float
   quantity      Int
@@ -207,9 +207,9 @@ model ObligationToFoundAccount {
 }
 
 model ObligationToBrokerBrokerageAccount {
-  obligation               Obligation             @relation(fields: [obligationId], references: [id])
+  obligation               Obligation             @relation(fields: [obligationId], references: [id], onDelete: Cascade)
   obligationId             Int
-  brokerBrokerageAccount   BrokerBrokerageAccount @relation(fields: [brokerBrokerageAccountId], references: [id])
+  brokerBrokerageAccount   BrokerBrokerageAccount @relation(fields: [brokerBrokerageAccountId], references: [id], onDelete: Cascade)
   brokerBrokerageAccountId Int
   price                    Float
   quantity                 Int
@@ -218,9 +218,9 @@ model ObligationToBrokerBrokerageAccount {
 }
 
 model ObligationToPhysicalBrokerageAccount {
-  obligation                 Obligation               @relation(fields: [obligationId], references: [id])
+  obligation                 Obligation               @relation(fields: [obligationId], references: [id], onDelete: Cascade)
   obligationId               Int
-  physicalBrokerageAccount   PhysicalBrokerageAccount @relation(fields: [physicalBrokerageAccountId], references: [id])
+  physicalBrokerageAccount   PhysicalBrokerageAccount @relation(fields: [physicalBrokerageAccountId], references: [id], onDelete: Cascade)
   physicalBrokerageAccountId Int
   price                      Float
   quantity                   Int

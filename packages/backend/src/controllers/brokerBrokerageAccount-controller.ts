@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
 import {
-    createPhysicalPerson,
-    showPhysicalPerson,
-    updatePhysicalPerson,
-    deletePhysicalPerson,
-} from "../services/physicalPerson-service";
+    createBrokerBrokerageAccount,
+    showBrokerBrokerageAccount,
+    updateBrokerBrokerageAccount,
+    deleteBrokerBrokerageAccount,
+} from "../services/brokerBrokerageAccount-service";
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const { name, surname, inn, patronymic } = req.body;
-        const physicalPerson = await createPhysicalPerson({
-            name,
-            surname,
-            inn,
-            patronymic,
+        const { capital, brokerId } = req.body;
+        const brokerBrokerageAccount = await createBrokerBrokerageAccount({
+            capital,
+            Broker: {
+                connect: { id: brokerId },
+            },
         });
         return res.status(201).json({
-            message: "Элемент добавлен в базу",
-            data: physicalPerson,
+            message: "Аккаунт брокера добавлен в базу",
+            data: brokerBrokerageAccount,
         });
     } catch (error) {
         console.log(error);
@@ -30,10 +30,10 @@ export const create = async (req: Request, res: Response) => {
 
 export const show = async (_: Request, res: Response) => {
     try {
-        const physicalPersons = await showPhysicalPerson();
+        const brokerBrokerageAccounts = await showBrokerBrokerageAccount();
         return res.status(200).json({
-            message: "Список успешно сформирован",
-            data: physicalPersons,
+            message: "Список брокеров успешно сформирован",
+            data: brokerBrokerageAccounts,
         });
     } catch (error) {
         console.log(error);
@@ -47,19 +47,19 @@ export const show = async (_: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const { name, surname, inn, patronymic } = req.body;
-        const physicalPerson = await updatePhysicalPerson(
+        const { capital, brokerId } = req.body;
+        const brokerBrokerageAccount = await updateBrokerBrokerageAccount(
             {
-                name,
-                surname,
-                inn,
-                patronymic,
+                capital,
+                Broker: {
+                    connect: { id: brokerId },
+                },
             },
             id
         );
         return res.status(200).json({
-            message: "Элемент обновлен",
-            data: physicalPerson,
+            message: "Аккаунт брокера обновлен",
+            data: brokerBrokerageAccount,
         });
     } catch (error) {
         console.log(error);
@@ -73,10 +73,10 @@ export const update = async (req: Request, res: Response) => {
 export const remove = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const company = await deletePhysicalPerson(id);
+        const brokerBrokerageAccount = await deleteBrokerBrokerageAccount(id);
         return res.status(200).json({
-            message: "Элемент удален из базы",
-            data: company,
+            message: "Аккаунт брокера удален из базы",
+            data: brokerBrokerageAccount,
         });
     } catch (error) {
         console.log(error);
