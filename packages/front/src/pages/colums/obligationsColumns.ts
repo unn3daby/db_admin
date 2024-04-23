@@ -12,12 +12,14 @@ export default <QTableProps['columns']>[
     label: 'ID плательщика',
     align: 'left',
     field: 'payerId',
+    sortable: true,
   },
   {
     name: 'price',
     align: 'left',
     label: 'Цена',
     field: 'price',
+    sortable: true,
   },
   {
     name: 'date',
@@ -25,18 +27,21 @@ export default <QTableProps['columns']>[
     label: 'Дата',
     field: 'date',
     format: (val: string) => `${new Date(val).toLocaleDateString()}`,
+    sortable: true,
   },
   {
     name: 'openingPrice',
     align: 'left',
     label: 'Цена открытия',
     field: 'openingPrice',
+    sortable: true,
   },
   {
     name: 'closePrice',
     align: 'left',
     label: 'Цена закрытия',
     field: 'closePrice',
+    sortable: true,
   },
   {
     name: 'controls',

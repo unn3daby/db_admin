@@ -12,18 +12,21 @@ export default <QTableProps['columns']>[
     label: 'ID брокера',
     align: 'left',
     field: 'brokerId',
+    sortable: true,
   },
   {
     name: 'physicalPersonId',
     align: 'left',
     label: 'ID физического лица',
     field: 'physicalPersonId',
+    sortable: true,
   },
   {
     name: 'capital',
     align: 'left',
     label: 'Капитал',
     field: 'capital',
+    sortable: true,
   },
   {
     name: 'createdAt',
@@ -32,6 +35,7 @@ export default <QTableProps['columns']>[
     field: 'createdAt',
     format: (val: string) =>
       `${new Date(val).toLocaleDateString()} ${new Date(val).toLocaleTimeString()}`,
+    sortable: true,
   },
   {
     name: 'controls',

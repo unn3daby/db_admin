@@ -5,13 +5,13 @@ export default <QTableProps['columns']>[
     name: 'id',
     label: 'ID',
     align: 'left',
-    field: 'id',
+    field: 'id',sortable: true,
   },
   {
     name: 'fundId',
     label: 'ID фонда',
     align: 'left',
-    field: 'fundId',
+    field: 'fundId',sortable: true,
   },
   {
     name: 'createdAt',
@@ -19,12 +19,12 @@ export default <QTableProps['columns']>[
     label: 'Создан',
     field: 'createdAt',
     format: (val: string) =>
-      `${new Date(val).toLocaleDateString()} ${new Date(val).toLocaleTimeString()}`,
+      `${new Date(val).toLocaleDateString()} ${new Date(val).toLocaleTimeString()}`,sortable: true,
   },
   {
     name: 'capital',
     align: 'left',
-    label: 'Капитал',
+    label: 'Капитал',sortable: true,
     field: 'capital',
   },
   {
