@@ -14,18 +14,23 @@ export default <QTableProps['columns']>[
     field: 'name',
   },
   {
-    name: 'paymentAccount',
+    name: 'surname',
     align: 'left',
-    label: 'Платежный аккаунт',
-    field: 'paymentAccount',
+    label: 'Фамилия',
+    field: 'surname',
   },
   {
-    name: 'createdAt',
-    label: 'Создан',
+    name: 'patronymic',
     align: 'left',
-    field: 'createdAt',
-    format: (val: string) =>
-      `${new Date(val).toLocaleDateString()} ${new Date(val).toLocaleTimeString()}`,
+    label: 'Отчество',
+    field: 'patronymic',
+    format: (val: string) => val ?? '----------------',
+  },
+  {
+    name: 'inn',
+    label: 'ИНН',
+    align: 'left',
+    field: 'inn',
   },
   {
     name: 'controls',

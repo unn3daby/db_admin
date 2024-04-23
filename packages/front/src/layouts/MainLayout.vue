@@ -53,46 +53,55 @@ const linksList: EssentialLinkProps[] = [
   {
     title: 'Аккаунты брокеров',
     caption: 'CRUD',
+    to: { path: '/brokers-account' },
     icon: 'mdi-iobroker',
   },
   {
     title: 'Компании',
     caption: 'CRUD',
+    to: { path: '/companies' },
     icon: 'mdi-domain',
   },
   {
     title: 'Акции',
     caption: 'CRUD',
+    to: { path: '/stocks' },
     icon: 'mdi-chart-areaspline',
   },
   {
     title: 'Фонды',
     caption: 'CRUD',
+    to: { path: '/funds' },
     icon: 'mdi-cash-refund',
   },
   {
     title: 'Счета Фондов',
     caption: 'CRUD',
+    to: { path: '/funds-accounts' },
     icon: 'mdi-cash-refund',
   },
   {
     title: 'Облигации',
     caption: 'CRUD',
+    to: { path: '/obligations' },
     icon: 'mdi-note-text-outline',
   },
   {
     title: 'Плательщики',
     caption: 'CRUD',
+    to: { path: '/payers' },
     icon: 'mdi-cash-sync',
   },
   {
     title: 'Физ. Лицо',
     caption: 'CRUD',
+    to: { path: '/physical-persons' },
     icon: 'mdi-account-box-outline',
   },
   {
     title: 'Брокерский Аккаунт Физ. Лица',
     caption: 'CRUD',
+    to: { path: '/broker-accounts-physical' },
     icon: 'mdi-account-credit-card-outline',
   },
 ];

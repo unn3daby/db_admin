@@ -9,15 +9,27 @@ export default <QTableProps['columns']>[
   },
   {
     name: 'name',
-    label: 'Имя',
+    label: 'Название',
     align: 'left',
     field: 'name',
   },
   {
-    name: 'paymentAccount',
+    name: 'revenue',
     align: 'left',
-    label: 'Платежный аккаунт',
-    field: 'paymentAccount',
+    label: 'Доход',
+    field: 'revenue',
+  },
+  {
+    name: 'marketCap',
+    align: 'left',
+    label: 'Капитал',
+    field: 'marketCap',
+  },
+  {
+    name: 'netIncome',
+    align: 'left',
+    label: 'Чистый доход',
+    field: 'netIncome',
   },
   {
     name: 'createdAt',

@@ -8,16 +8,16 @@ export default <QTableProps['columns']>[
     field: 'id',
   },
   {
-    name: 'name',
-    label: 'Имя',
+    name: 'brokerId',
+    label: 'ID брокера',
     align: 'left',
-    field: 'name',
+    field: 'brokerId',
   },
   {
-    name: 'paymentAccount',
+    name: 'capital',
     align: 'left',
-    label: 'Платежный аккаунт',
-    field: 'paymentAccount',
+    label: 'Капитал',
+    field: 'capital',
   },
   {
     name: 'createdAt',

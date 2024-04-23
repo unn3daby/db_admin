@@ -2,15 +2,15 @@
   <q-page class="q-pa-md page-hack flex justify-center items-center">
     <q-table
       class="full-height vn"
-      title="Брокеры"
+      title="Плательщики"
       :loading="isLoading"
-      :rows="filteredRows"
       :rows-per-page-options="[0]"
+      :rows="filteredRows"
       :columns="columns"
       row-key="name"
     >
       <template #top-left>
-        <div class="text-h5">Счета брокеров</div>
+        <div class="text-h5">Плателщики</div>
         <q-input
           style="width: 150px"
           v-model="search"
@@ -43,9 +43,8 @@
           @click="
             () => {
               (changeableRow = {
-                id: '',
                 name: '',
-                paymentAccount: '',
+                status: '',
               }),
                 (isCreateOpened = true);
             }
@@ -92,7 +91,7 @@
 
 <script lang="ts" setup>
 import { Ref, computed, onMounted, ref } from 'vue';
-import columns from './colums/BrokersColums';
+import columns from './colums/payersColumns';
 import axios, { AxiosError } from 'axios';
 import { useQuasar } from 'quasar';
 
@@ -133,7 +132,7 @@ const onCreate = async () => {
     console.log(changeableRow);
     const {
       data: { message },
-    } = await axios.post('http://localhost:8001/api/broker', newRow.value);
+    } = await axios.post('http://localhost:8001/api/payer', newRow.value);
     $q.notify({ type: 'positive', message: message });
     isCreateOpened.value = false;
     await getData();
@@ -159,7 +158,7 @@ const onUpdate = async (id: number) => {
     const {
       data: { message },
     } = await axios.put(
-      `http://localhost:8001/api/broker/${id}`,
+      `http://localhost:8001/api/payer/${id}`,
       changeableRow.value,
     );
     $q.notify({ type: 'positive', message: message });
@@ -171,9 +170,7 @@ const onUpdate = async (id: number) => {
       $q.notify({
         type: 'negative',
         message:
-          error.response?.data.data.meta.cause ??
-          error.response?.data.message ??
-          'Ошибка',
+          error.response?.data.data.meta.cause ?? error.response?.data.message,
       });
   } finally {
     isLoading.value = false;
@@ -185,7 +182,7 @@ const onDelete = async (id: number) => {
     isLoading.value = true;
     const {
       data: { message },
-    } = await axios.delete(`http://localhost:8001/api/broker/${id}`);
+    } = await axios.delete(`http://localhost:8001/api/payer/${id}`);
     $q.notify({ type: 'positive', message: message });
     await getData();
   } catch (error) {
@@ -194,9 +191,7 @@ const onDelete = async (id: number) => {
       $q.notify({
         type: 'negative',
         message:
-          error.response?.data.data.meta.cause ??
-          error.response?.data.message ??
-          'Ошибка',
+          error.response?.data.data.meta.cause ?? error.response?.data.message,
       });
   } finally {
     isLoading.value = false;
@@ -208,18 +203,10 @@ const getData = async () => {
     rows.value = [];
     const {
       data: { data, message },
-    } = await axios.get('http://localhost:8001/api/broker');
+    } = await axios.get('http://localhost:8001/api/payer');
     rows.value = data;
     return message;
   } catch (error) {
-    if (error instanceof AxiosError)
-      $q.notify({
-        type: 'negative',
-        message:
-          error.response?.data.data.meta.cause ??
-          error.response?.data.message ??
-          'Ошибка',
-      });
     console.error(error);
   }
 };
@@ -233,6 +220,6 @@ onMounted(async () => {
 </script>
 <style lang="scss">
 .vn {
-  width: 1000px;
+  width: 800px;
 }
 </style>

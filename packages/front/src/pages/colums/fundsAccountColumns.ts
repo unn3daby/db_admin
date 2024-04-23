@@ -8,24 +8,24 @@ export default <QTableProps['columns']>[
     field: 'id',
   },
   {
-    name: 'name',
-    label: 'Имя',
+    name: 'fundId',
+    label: 'ID фонда',
     align: 'left',
-    field: 'name',
-  },
-  {
-    name: 'paymentAccount',
-    align: 'left',
-    label: 'Платежный аккаунт',
-    field: 'paymentAccount',
+    field: 'fundId',
   },
   {
     name: 'createdAt',
-    label: 'Создан',
     align: 'left',
+    label: 'Создан',
     field: 'createdAt',
     format: (val: string) =>
       `${new Date(val).toLocaleDateString()} ${new Date(val).toLocaleTimeString()}`,
+  },
+  {
+    name: 'capital',
+    align: 'left',
+    label: 'Капитал',
+    field: 'capital',
   },
   {
     name: 'controls',

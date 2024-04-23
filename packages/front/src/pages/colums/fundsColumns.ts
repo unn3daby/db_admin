@@ -9,23 +9,35 @@ export default <QTableProps['columns']>[
   },
   {
     name: 'name',
-    label: 'Имя',
+    label: 'Название',
     align: 'left',
     field: 'name',
   },
   {
-    name: 'paymentAccount',
-    align: 'left',
-    label: 'Платежный аккаунт',
-    field: 'paymentAccount',
-  },
-  {
     name: 'createdAt',
-    label: 'Создан',
     align: 'left',
+    label: 'Создан',
     field: 'createdAt',
     format: (val: string) =>
       `${new Date(val).toLocaleDateString()} ${new Date(val).toLocaleTimeString()}`,
+  },
+  {
+    name: 'fullname',
+    align: 'left',
+    label: 'Полное название',
+    field: 'fullname',
+  },
+  {
+    name: 'capitalization',
+    align: 'left',
+    label: 'Капитализация',
+    field: 'capitalization',
+  },
+  {
+    name: 'shortname',
+    align: 'left',
+    label: 'Сокр. название',
+    field: 'shortname',
   },
   {
     name: 'controls',

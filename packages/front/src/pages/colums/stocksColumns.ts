@@ -1,0 +1,86 @@
+import { QTableProps } from 'quasar';
+
+export default <QTableProps['columns']>[
+  {
+    name: 'id',
+    label: 'ID',
+    align: 'left',
+    field: 'id',
+    sortable: true,
+  },
+  {
+    name: 'companyId',
+    label: 'ID компании',
+    align: 'left',
+    field: 'companyId',
+    sortable: true,
+  },
+  {
+    name: 'globalId',
+    align: 'left',
+    label: 'Глобальный ID',
+    field: 'globalId',
+    sortable: true,
+  },
+  {
+    name: 'price',
+    align: 'left',
+    label: 'Цена',
+    field: 'price',
+    sortable: true,
+  },
+  {
+    name: 'date',
+    align: 'left',
+    label: 'Дата',
+    field: 'date',
+    sortable: true,
+    format: (val: string) => `${new Date(val).toLocaleDateString()}`,
+  },
+  {
+    name: 'fullName',
+    align: 'left',
+    label: 'Полное название',
+    field: 'fullName',
+    sortable: true,
+  },
+  {
+    name: 'isinCode',
+    align: 'left',
+    label: 'Код ИСИН',
+    field: 'isinCode',
+    sortable: true,
+  },
+  {
+    name: 'shortName',
+    align: 'left',
+    label: 'Короткое имя',
+    field: 'shortName',
+    sortable: true,
+  },
+  {
+    name: 'openingPrice',
+    label: 'Цена открытия',
+    align: 'left',
+    field: 'openingPrice',
+    sortable: true,
+  },
+  {
+    name: 'appeal',
+    label: 'В обращении',
+    align: 'left',
+    field: 'appeal',
+    sortable: true,
+  },
+  {
+    name: 'closePrice',
+    label: 'Цена закрытия',
+    align: 'left',
+    field: 'closePrice',
+    sortable: true,
+  },
+  {
+    name: 'controls',
+    align: 'right',
+  },
+];
