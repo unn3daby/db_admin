@@ -9,7 +9,11 @@ export const createPayer = async (data: Prisma.PayerCreateInput) => {
 };
 
 export const showPayer = async () => {
-    const stocks = await prisma.payer.findMany();
+    const stocks = await prisma.payer.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

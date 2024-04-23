@@ -11,7 +11,7 @@ export const create = async (req: Request, res: Response) => {
         const { name, paymentAccount } = req.body;
         const broker = await createBroker({
             name,
-            paymentAccount,
+            paymentAccount: parseInt(paymentAccount),
         });
         return res.status(201).json({
             message: "Брокер успешно создан",
@@ -49,7 +49,7 @@ export const update = async (req: Request, res: Response) => {
         const company = await updateBroker(
             {
                 name,
-                paymentAccount,
+                paymentAccount: parseInt(paymentAccount),
             },
             id
         );

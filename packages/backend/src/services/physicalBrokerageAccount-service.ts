@@ -9,7 +9,11 @@ export const createPhysicalBrokerageAccount = async (data: Prisma.PhysicalBroker
 };
 
 export const showPhysicalBrokerageAccount = async () => {
-    const stocks = await prisma.physicalBrokerageAccount.findMany();
+    const stocks = await prisma.physicalBrokerageAccount.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

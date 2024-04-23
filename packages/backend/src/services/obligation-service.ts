@@ -9,7 +9,11 @@ export const createObligation = async (data: Prisma.ObligationCreateInput) => {
 };
 
 export const showObligation = async () => {
-    const stocks = await prisma.obligation.findMany();
+    const stocks = await prisma.obligation.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

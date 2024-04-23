@@ -9,13 +9,14 @@ import {
 export const create = async (req: Request, res: Response) => {
     try {
         const { price, date, openingPrice, closePrice, payerId } = req.body;
+        const jsDate = new Date(date);
         const obligation = await createObligation({
             price,
-            date,
-            openingPrice,
-            closePrice,
+            date: jsDate.toISOString(),
+            openingPrice: parseInt(openingPrice),
+            closePrice: parseInt(closePrice),
             Payer: {
-                connect: { id: payerId },
+                connect: { id: parseInt(payerId) },
             },
         });
         return res.status(201).json({
@@ -51,14 +52,15 @@ export const update = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
         const { price, date, openingPrice, closePrice, payerId } = req.body;
+        const jsDate = new Date(date);
         const obligation = await updateObligation(
             {
                 price,
-                date,
-                openingPrice,
-                closePrice,
+                date: jsDate.toISOString(),
+                openingPrice: parseInt(openingPrice),
+                closePrice: parseInt(closePrice),
                 Payer: {
-                    connect: { id: payerId },
+                    connect: { id: parseInt(payerId) },
                 },
             },
             id

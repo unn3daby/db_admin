@@ -8,12 +8,11 @@ import {
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const { fundStockId, capital, fundId } = req.body;
+        const { capital, fundId } = req.body;
         const fundAccount = await createFundAccount({
-            fundStockId,
-            capital,
+            capital: parseInt(capital),
             Fund: {
-                connect: { id: fundId },
+                connect: { id: parseInt(fundId) },
             },
         });
         return res.status(201).json({
@@ -48,13 +47,12 @@ export const show = async (_: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const { fundStockId, capital, fundId } = req.body;
+        const { capital, fundId } = req.body;
         const fundAccount = await updateFundAccount(
             {
-                fundStockId,
-                capital,
+                capital: parseInt(capital),
                 Fund: {
-                    connect: { id: fundId },
+                    connect: { id: parseInt(fundId) },
                 },
             },
             id

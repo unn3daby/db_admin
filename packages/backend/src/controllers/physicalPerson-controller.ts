@@ -12,7 +12,7 @@ export const create = async (req: Request, res: Response) => {
         const physicalPerson = await createPhysicalPerson({
             name,
             surname,
-            inn,
+            inn: parseInt(inn),
             patronymic,
         });
         return res.status(201).json({
@@ -48,11 +48,12 @@ export const update = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
         const { name, surname, inn, patronymic } = req.body;
+        console.log(patronymic);
         const physicalPerson = await updatePhysicalPerson(
             {
                 name,
                 surname,
-                inn,
+                inn: parseInt(inn),
                 patronymic,
             },
             id

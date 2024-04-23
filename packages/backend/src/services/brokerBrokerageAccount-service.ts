@@ -9,7 +9,11 @@ export const createBrokerBrokerageAccount = async (data: Prisma.BrokerBrokerageA
 };
 
 export const showBrokerBrokerageAccount = async () => {
-    const stocks = await prisma.brokerBrokerageAccount.findMany();
+    const stocks = await prisma.brokerBrokerageAccount.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

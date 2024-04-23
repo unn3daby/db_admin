@@ -9,7 +9,11 @@ export const createFund = async (data: Prisma.FundCreateInput) => {
 };
 
 export const showFund = async () => {
-    const stocks = await prisma.fund.findMany();
+    const stocks = await prisma.fund.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

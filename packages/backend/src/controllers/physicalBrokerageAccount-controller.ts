@@ -10,12 +10,12 @@ export const create = async (req: Request, res: Response) => {
     try {
         const { capital, brokerId, physicalPersonId } = req.body;
         const physicalBrokerageAccount = await createPhysicalBrokerageAccount({
-            capital,
+            capital: parseInt(capital),
             Broker: {
-                connect: { id: brokerId },
+                connect: { id: parseInt(brokerId) },
             },
             PhysicalPerson: {
-                connect: { id: physicalPersonId },
+                connect: { id: parseInt(physicalPersonId) },
             },
         });
         return res.status(201).json({
@@ -53,12 +53,12 @@ export const update = async (req: Request, res: Response) => {
         const { capital, brokerId, physicalPersonId } = req.body;
         const physicalBrokerageAccount = await updatePhysicalBrokerageAccount(
             {
-                capital,
+                capital: parseInt(capital),
                 Broker: {
-                    connect: { id: brokerId },
+                    connect: { id: parseInt(brokerId) },
                 },
                 PhysicalPerson: {
-                    connect: { id: physicalPersonId },
+                    connect: { id: parseInt(physicalPersonId) },
                 },
             },
             id

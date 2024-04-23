@@ -10,9 +10,9 @@ export const create = async (req: Request, res: Response) => {
     try {
         const { capital, brokerId } = req.body;
         const brokerBrokerageAccount = await createBrokerBrokerageAccount({
-            capital,
+            capital: parseInt(capital),
             Broker: {
-                connect: { id: brokerId },
+                connect: { id: parseInt(brokerId) },
             },
         });
         return res.status(201).json({
@@ -50,9 +50,9 @@ export const update = async (req: Request, res: Response) => {
         const { capital, brokerId } = req.body;
         const brokerBrokerageAccount = await updateBrokerBrokerageAccount(
             {
-                capital,
+                capital: parseInt(capital),
                 Broker: {
-                    connect: { id: brokerId },
+                    connect: { id: parseInt(brokerId) },
                 },
             },
             id

@@ -9,7 +9,11 @@ export const createFundAccount = async (data: Prisma.FundAccountCreateInput) => 
 };
 
 export const showFundAccount = async () => {
-    const stocks = await prisma.fundAccount.findMany();
+    const stocks = await prisma.fundAccount.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

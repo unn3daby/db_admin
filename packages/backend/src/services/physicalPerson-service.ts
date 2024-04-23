@@ -11,7 +11,11 @@ export const createPhysicalPerson = async (
 };
 
 export const showPhysicalPerson = async () => {
-    const stocks = await prisma.physicalPerson.findMany();
+    const stocks = await prisma.physicalPerson.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

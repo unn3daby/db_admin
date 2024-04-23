@@ -9,7 +9,11 @@ export const createCompany = async (data: Prisma.CompanyCreateInput) => {
 };
 
 export const showCompanies = async () => {
-    const stocks = await prisma.company.findMany();
+    const stocks = await prisma.company.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 

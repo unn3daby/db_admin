@@ -11,9 +11,9 @@ export const create = async (req: Request, res: Response) => {
         const { name, revenue, marketCap, netIncome } = req.body;
         const company = await createCompany({
             name,
-            revenue,
-            marketCap,
-            netIncome,
+            revenue: parseInt(revenue),
+            marketCap: parseInt(marketCap),
+            netIncome: parseInt(netIncome),
         });
         return res.status(201).json({
             message: "Компания успешно создана",
@@ -51,9 +51,9 @@ export const update = async (req: Request, res: Response) => {
         const company = await updateCompany(
             {
                 name,
-                revenue,
-                marketCap,
-                netIncome,
+                revenue: parseInt(revenue),
+                marketCap: parseInt(marketCap),
+                netIncome: parseInt(netIncome),
             },
             id
         );

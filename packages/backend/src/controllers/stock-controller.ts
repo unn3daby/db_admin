@@ -21,17 +21,19 @@ export const create = async (req: Request, res: Response) => {
             appeal,
             closePrice,
         } = req.body;
+        const jsDate = new Date(date);
+        console.log(jsDate);
         const stock = await createStock({
-            globalId,
-            price,
-            date,
+            Company: { connect: { id: parseInt(companyId) } },
+            globalId: parseInt(globalId),
+            price: parseInt(price),
+            date: jsDate.toISOString(),
             fullName,
-            isinCode,
+            isinCode: parseInt(isinCode),
             shortName,
-            openingPrice,
-            appeal,
-            closePrice,
-            Company: { connect: { id: companyId } },
+            openingPrice: parseInt(openingPrice),
+            appeal: parseInt(appeal),
+            closePrice: parseInt(closePrice),
         });
         return res.status(201).json({
             message: "Success Create Stock",
@@ -77,21 +79,19 @@ export const update = async (req: Request, res: Response) => {
             appeal,
             closePrice,
         } = req.body;
-        const stock = await updateStock(
-            {
-                Company: { connect: { id: companyId } },
-                globalId,
-                price,
-                date,
-                fullName,
-                isinCode,
-                shortName,
-                openingPrice,
-                appeal,
-                closePrice,
-            },
-            id
-        );
+        const jsDate = new Date(date);
+        const stock = await createStock({
+            Company: { connect: { id: parseInt(companyId) } },
+            globalId: parseInt(globalId),
+            price: parseInt(price),
+            date: jsDate.toISOString(),
+            fullName,
+            isinCode: parseInt(isinCode),
+            shortName,
+            openingPrice: parseInt(openingPrice),
+            appeal: parseInt(appeal),
+            closePrice: parseInt(closePrice),
+        });
         return res.status(200).json({
             message: "Акция обновлена",
             data: stock,

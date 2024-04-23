@@ -9,7 +9,11 @@ export const createStock = async (data: Prisma.StockCreateInput) => {
 };
 
 export const showStocks = async () => {
-    const stocks = await prisma.stock.findMany();
+    const stocks = await prisma.stock.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 
@@ -40,6 +44,13 @@ export const showStocksByCompanyId = async (companyId: number) => {
         where: {
             companyId: companyId,
         },
+    });
+    return stocks;
+};
+
+export const searchStocks = async (string: string) => {
+    const stocks = await prisma.stock.findMany({
+        where: {},
     });
     return stocks;
 };

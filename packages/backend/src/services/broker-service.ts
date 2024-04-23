@@ -9,7 +9,11 @@ export const createBroker = async (data: Prisma.BrokerCreateInput) => {
 };
 
 export const showBroker = async () => {
-    const stocks = await prisma.broker.findMany();
+    const stocks = await prisma.broker.findMany({
+        orderBy: {
+            id: Prisma.SortOrder.desc,
+        },
+    });
     return stocks;
 };
 
